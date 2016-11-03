@@ -1,0 +1,59 @@
+1.
+point a) wget -c http:/api.worldbank.org/v2/en/indicator/SI.POV.GINI?downloadformat=csv
+
+
+point b)unzip SI.POV.GINI?downloadformat=csv (ini hasil download an namanya ini pak )
+awk -F"|" '$20 { NN++; next } { N++ } END { print "Null: " N "   Not Null:" NN }' API_SI.POV.GINI_DS2_en_csv_v2.csv
+
+
+
+point c dan d)nano mindanmax.py
+
+#!/usr/var/envy python
+data = []
+with open('API_SI.POV.GINI_DS2_en_csv_v2.csv') as f:
+    for line in f:
+        fields = line.split()
+        rowdata = map(float, fields)
+        data.extend(rowdata)
+print 'Minimum:', min(data)
+print 'Maximum:', max(data)
+
+python mindanmax.py
+
+point e)nano avarage.py
+#! /usr/var/envy python
+import string
+f = lambda x: x.isalpha() and x or x.isdigit() and \
+ int(x) or x.isalnum() and x or \
+ len(set(string.punctuation).intersection(x)) == 1 and \
+ x.count('.') == 1 and float(x) or x
+def main():
+
+    total = 0.0
+    length = 0.0
+    average = 0.0
+with open('API_SI.POV.GINI_DS2_en_csv_v2.csv') as f:
+        for line in f:
+            amount = float(line)
+            total += amount
+            length = length + 1
+
+        average = total / length
+print (average)
+main()
+
+2.
+poin a)menggunakan GET
+ curl --insecure https://aplikasi.pertanian.go.id/smshargakab/qrylapharprov.asp?selrepo=JawaTimur&seltgl=1&selbul=9&seltah=2016
+poin b)
+ *curl --insecure https://aplikasi.pertanian.go.id/smshargakab/qrylapharprov.asp?selrepo=JawaTimur&seltgl=1&selbul=9&seltah=2016 >> harga.txt
+  lalu buat nano sort.py(with open('harga.txt'))
+  python sort.py >> hasil1.txt
+ nano jum.py (with open('hasil1.txt))--- gunanya meloop sebanyak file yang dissimpan sesuai jumlah hari 
+ python jum.py
+
+nb*:  diulangi sampai banyak hari dibulan oktober
+
+AT LEAST I DO MY BEST WITH OUT CHEATING
+
